@@ -14,7 +14,6 @@ const SignUpForm = ()=>{
     const [formFields,setFormFields] = useState(defaultFormFields)
     const {displayName,email,password,confirmPassword} = formFields
 
-    console.log(formFields)
     const resetFormFields = ()=>{
         setFormFields(defaultFormFields)
     }
@@ -52,52 +51,54 @@ const SignUpForm = ()=>{
         
     }
     return (
-        <div className="sign-up-container">
-            <h2>Don't have an account?</h2>
-            <span >Sign up with your email and password</span>
-            <form onSubmit={handleSubmit}>
+        
+    
+            <div className="sign-up-container">
+                <h2>Don't have an account?</h2>
+                <span >Sign up with your email and password</span>
+                <form onSubmit={handleSubmit}>
 
-                {/* Name */}
-                <FormInput 
-                    label={'Display Name'}
-                    type='text'
-                    required
-                    onChange={handlChange}
-                    name='displayName'
-                    value={displayName}
-                />
+                    {/* Name */}
+                    <FormInput 
+                        label={'Display Name'}
+                        type='text'
+                        required
+                        onChange={handlChange}
+                        name='displayName'
+                        value={displayName}
+                    />
+                    
+                    {/* Email */}
+                    <FormInput 
+                        label={'Email'}
+                        type='email'
+                        required
+                        onChange={handlChange}
+                        name='email'
+                        value={email}
+                    />
+                    {/* Password */}
+                    <FormInput 
+                        label={'Password'}
+                        type='password'
+                        required
+                        onChange={handlChange}
+                        name='password'
+                        value={password}
+                    />
+                    {/* Confirm Password */}
+                    <FormInput 
+                        label={'Confirm Password'}
+                        type='password'
+                        required
+                        onChange={handlChange}
+                        name='confirmPassword'
+                        value={confirmPassword}
+                    />
                 
-                 {/* Email */}
-                 <FormInput 
-                    label={'Email'}
-                    type='email'
-                    required
-                    onChange={handlChange}
-                    name='email'
-                    value={email}
-                />
-                 {/* Password */}
-                 <FormInput 
-                    label={'Password'}
-                    type='password'
-                    required
-                    onChange={handlChange}
-                    name='password'
-                    value={password}
-                />
-                 {/* Confirm Password */}
-                 <FormInput 
-                    label={'Confirm Password'}
-                    type='password'
-                    required
-                    onChange={handlChange}
-                    name='confirmPassword'
-                    value={confirmPassword}
-                />
-               
-                <Button type="submit">Sign Up</Button>
-            </form>
-        </div>
+                    <Button type="submit">Sign Up</Button>
+                </form>
+            </div>  
     )
 }
 export default SignUpForm
