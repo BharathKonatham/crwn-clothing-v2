@@ -1,22 +1,19 @@
 import { useState } from "react"
-import { createUserDocumentFromAuth,signInWithGooglePopup,signUserWithEmailAndPassword } from "../../utils/firebase.utils"
+import { signInWithGooglePopup,signUserWithEmailAndPassword } from "../../utils/firebase.utils"
 import FormInput from "../form-input/form-input.component"
 import './sign-in-form.styles.scss'
 import Button from "../button/button.component"
-
 
 
 const SignInForm = ()=>{
 
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
-
     
     const handleSubmit = async(e)=>{
         e.preventDefault()
         try{
-            const response = await signUserWithEmailAndPassword(email,password)
-            console.log(response)
+            const {user} = await signUserWithEmailAndPassword(email,password)
             setEmail('')
             setPassword('')
         }catch(error) {
@@ -33,8 +30,7 @@ const SignInForm = ()=>{
            
     }
     const logGoogleUser = async ()=>{
-        const {user} = await signInWithGooglePopup()
-        await createUserDocumentFromAuth(user)
+        await signInWithGooglePopup()
       }
     return (
         <div className="sign-up-container">
