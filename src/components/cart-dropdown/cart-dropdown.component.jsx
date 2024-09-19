@@ -14,7 +14,6 @@ const CartDropdown = () => {
     setIsCartOpen(false)
   }
 
-  console.log(cartItems)
   return (
     <div className='cart-dropdown-container'>
      
