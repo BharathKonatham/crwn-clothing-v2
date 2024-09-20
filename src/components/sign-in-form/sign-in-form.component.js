@@ -13,7 +13,7 @@ const SignInForm = ()=>{
     const handleSubmit = async(e)=>{
         e.preventDefault()
         try{
-            const {user} = await signUserWithEmailAndPassword(email,password)
+            await signUserWithEmailAndPassword(email,password)
             setEmail('')
             setPassword('')
         }catch(error) {
