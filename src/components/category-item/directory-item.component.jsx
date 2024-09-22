@@ -5,7 +5,6 @@ import {  useNavigate } from 'react-router-dom'
 
 const DirectoryItem = ({category}) => {
     const {title,imageUrl,route} = category
-    console.log(title,imageUrl)
     const navigate = useNavigate()
     const onNavigateHandler = ()=>navigate(route)
 
