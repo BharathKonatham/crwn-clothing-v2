@@ -12,7 +12,7 @@ const CategoryPreview = ({title,products})=>{
             <h2><Link className='title' to={title}>{title.toUpperCase()}</Link></h2>
             <div className='preview'>
                 {
-                    products.filter((_,index)=>index<4).map((product)=>(
+                    products.filter((_,index)=>index < 4).map((product)=>(
                         <ProductCard product={product} key={product.id}/>
                     ))
                 }
