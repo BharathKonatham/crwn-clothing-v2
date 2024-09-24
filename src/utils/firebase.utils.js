@@ -65,12 +65,18 @@ const firebaseConfig = {
     const q = query(collectionRef)
 
     const querySnapshot = await getDocs(q) //give snapshot of all the docuements
-    const categories = querySnapshot.docs.reduce((acc,docSnapshot)=>{
-      const { title ,items} = docSnapshot.data()
-      acc[title.toLowerCase()] = items
-      return acc
-    },{}) //query each different documnet snap shot, gives array of individual documents and we are reducing them into single array bu destructuring them
+    //we are moving the business logic of extracting raw data into selectors
+    // while using selectors, we can extract data in the way we want instead of just objects
+    //such as array or any other types
 
+    //in below code instead of sedning object we send data from documents in the form of array
+
+  //   const categories = querySnapshot.docs.reduce((acc,docSnapshot)=>{
+  //     const { title ,items} = docSnapshot.data()
+  //     acc[title.toLowerCase()] = items
+  //     return acc
+  //   },{}) //query each different documnet snap shot, gives array of individual documents and we are reducing them into single array bu destructuring them
+  const categories = querySnapshot.docs.map((docSnapshot)=> docSnapshot.data())
     return categories;
   }
 
