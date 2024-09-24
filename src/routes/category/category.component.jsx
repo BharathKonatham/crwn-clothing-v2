@@ -8,16 +8,19 @@ import { useSelector } from 'react-redux'
 import { selectCategoriesMap } from '../../store/categories/category.selector'
 const Category = () => {
     const {category} = useParams()
+    console.log('render/re-render category component')
     const categoriesMap = useSelector(selectCategoriesMap)
     const [products,setProducts] = useState(categoriesMap[category])
-
+    
+    
 
     //as getting the categories from the firebaes is async operation, we get error
     //when iteratin through producets using map intitally as the shop is rendered with empty categoriesMap object, 
     //so we use && to rendert the products conditionally , and we ues the useEffect to updated the products
     //when they are available from asyn operation, and then we iterate using map.All of this is done instantly 
     useEffect(()=>{
-        setProducts(categoriesMap[category])
+      console.log('effect fired calling setproduct')
+      setProducts(categoriesMap[category])
     },[categoriesMap,category])
     
   return (<>

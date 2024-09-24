@@ -7,9 +7,13 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 //import { UserProvider } from './contexts/user.context';
 //import { CategoriesProvider } from './contexts/categories.context';
-import { CartProvider } from './contexts/cart.context';
+//import { CartProvider } from './contexts/cart.context';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor } from './store/store';
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -19,9 +23,12 @@ root.render(
       <Provider store={store}> {/*  redux store provider */}
         {/* <UserProvider> user data */}
           {/* <CategoriesProvider>  products data */}
-            <CartProvider> {/* cart open or closed status provider */}
+            {/* <CartProvider> cart open or closed status provider */}
+            <PersistGate persistor={persistor} > {/* persistor to retains state after refresh */}
               <App />
-            </CartProvider>
+            </PersistGate>
+              
+            {/* </CartProvider> */}
           {/* </CategoriesProvider>  */}
         {/* </UserProvider> */}
       </Provider>
