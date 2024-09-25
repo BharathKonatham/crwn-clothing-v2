@@ -4,11 +4,16 @@ import { rootReducer } from "./root-reducer";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
 import storage from "redux-persist/lib/storage";
+
+import { thunk } from "redux-thunk";
+
+
+
 //logger is used to see the state value before an action is dispatche and after actions
 //to prevent logging in producetion  WE USE process.env.NODE_ENV === 'development'
 // to avoid passing false to the middler we use filter(Boolean) which filter or remove which
 //is not true from the array
-const middleWares = [process.env.NODE_ENV === 'development' && logger].filter(Boolean)
+const middleWares = [process.env.NODE_ENV === 'development' && logger,thunk].filter(Boolean)
 
 //below code is to use redux devtool extension, if it exist we user redux devtool composer else regular composesr from redux
 const composeEnahncer = (process.env.NODE_ENV !== 'production' && window && window.__REDUX_DEVETOOL_EXTENSION_COMPOSE__) || compose
@@ -36,7 +41,8 @@ const persistConfig = {
 
     key:'root', // persist the data from root level 
     storage:storage, //storage uses local memorey 
-    blacklist: ['user'] //don't persist reducers mention in this array
+    //blacklist: ['user'] //don't persist reducers mention in this array
+    whitelist: ['cart'] // persist reducers only mentioned in this array
 }
 
 const persistedReducer = persistReducer(persistConfig,rootReducer)
