@@ -4,19 +4,21 @@ import { rootReducer } from "./root-reducer";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
 import storage from "redux-persist/lib/storage";
-
-import { thunk } from "redux-thunk";
-
+import createSagaMiddleware from 'redux-saga'
+//import { thunk } from "redux-thunk";
+import { rootSaga } from "./root-saga";
 
 
 //logger is used to see the state value before an action is dispatche and after actions
 //to prevent logging in producetion  WE USE process.env.NODE_ENV === 'development'
 // to avoid passing false to the middler we use filter(Boolean) which filter or remove which
 //is not true from the array
-const middleWares = [process.env.NODE_ENV === 'development' && logger,thunk].filter(Boolean)
+
+const sagaMiddleware = createSagaMiddleware()
+const middleWares = [process.env.NODE_ENV === 'development' && logger, sagaMiddleware].filter(Boolean)
 
 //below code is to use redux devtool extension, if it exist we user redux devtool composer else regular composesr from redux
-const composeEnahncer = (process.env.NODE_ENV !== 'production' && window && window.__REDUX_DEVETOOL_EXTENSION_COMPOSE__) || compose
+const composeEnhancer = (process.env.NODE_ENV !== 'production' && window && window.__REDUX_DEVETOOL_EXTENSION_COMPOSE__) || compose
 //creating own logger middleware
 // const loggerMiddleware = (store)=> (next)=>(action)=>{
 //     if(!action.type){
@@ -33,7 +35,7 @@ const composeEnahncer = (process.env.NODE_ENV !== 'production' && window && wind
 
 //for logger to work we need middleware, these are run/hit before action hits reducer, when dispatch happens
 //middleware are enhancers which we need below to apply all middlewares
-const composedEnahncers = composeEnahncer(applyMiddleware(...middleWares))
+const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares))
 //root reducer
 
 
@@ -44,9 +46,8 @@ const persistConfig = {
     //blacklist: ['user'] //don't persist reducers mention in this array
     whitelist: ['cart'] // persist reducers only mentioned in this array
 }
-
 const persistedReducer = persistReducer(persistConfig,rootReducer)
 //replace rootReducer with persistedReducer
-export const store = legacy_createStore(persistedReducer,undefined,composedEnahncers) //optional second paramter
-
+export const store = legacy_createStore(persistedReducer,undefined,composedEnhancers) //optional second paramter
+sagaMiddleware.run(rootSaga)
 export const persistor = persistStore(store)
