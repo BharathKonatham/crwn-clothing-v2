@@ -6,22 +6,24 @@ import Authentication from './routes/authentication/authentication.component';
 import Shop from './components/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component'
 import {  useEffect } from "react";
-import { onAuthStateChangedListner, createUserDocumentFromAuth } from "./utils/firebase.utils";
-import { setCurrentUser } from './store/user/user.action';
+import { checkUserSession } from './store/user/user.action';
 import { useDispatch } from 'react-redux';
 const App = () => {
   const dispatch = useDispatch()
   useEffect(()=>{
-    const unsubscribe = onAuthStateChangedListner(
-        (user)=>{ 
-            console.log(user)
-            if(user){
-                 createUserDocumentFromAuth(user)
-            }
-            dispatch(setCurrentUser(user))
-        }
-    )
-    return unsubscribe
+    //const unsubscribe = onAuthStateChangedListner( //instead of having a listner that responds for user state change 
+    //                                                 //we implement a promise based in firebase Utils
+    //     (user)=>{ 
+    //         console.log(user)
+    //         if(user){
+    //              createUserDocumentFromAuth(user)
+    //         }
+    //         dispatch(setCurrentUser(user))
+    //     }
+    // )
+    // return unsubscribe
+    console.log('chekcing user session')
+  dispatch(checkUserSession())
 // eslint-disable-next-line react-hooks/exhaustive-deps
 },[])
 

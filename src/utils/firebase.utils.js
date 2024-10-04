@@ -82,8 +82,8 @@ const firebaseConfig = {
 
 
   //below methods is to insert user data into db 
-  export const createUserDocumentFromAuth = async (userAuth)=>{ //userAuth contain user data obtained from authentication 
-
+  export const createUserDocumentFromAuth = async (userAuth,additionalInormation={})=>{ //userAuth contain user data obtained from authentication 
+    
     if(!userAuth) return; //if user auth is null return 
     const userDocRef = doc(db,'users',userAuth.uid) //give the db instance , colleciton name 'users', user uniqu id for document name
 
@@ -92,10 +92,12 @@ const firebaseConfig = {
 
     if(!userSnapshot.exists()){ //if the snap shot exist dont create new one else create new document for the user 
         const {displayName, email} = userAuth //destructure displayname, email from the userAuth object
+        const Name = displayName? displayName: additionalInormation.displayName
         const createdAt = new Date() // crate new time stamp for user creation 
+
         try{
             await setDoc(userDocRef,{ //write details into document, this not a batch insertion
-                displayName,
+                displayName:Name,
                 email,
                 createdAt
             })
@@ -103,12 +105,16 @@ const firebaseConfig = {
             console.log('error creating user',err.message)
         }
     }
+
+    return userSnapshot 
   }
 
   //below method is to create authentication data using email and password
   export const createAuthUserWithEmailAndPassword = async (email,password)=>{ 
+    console.log('creating user')
+    console.log(email,password)
     if(!email || !password) return; //return if email and password are null
-    return createUserWithEmailAndPassword(auth,email,password) //else create the authenticaion data for the user
+    return createUserWithEmailAndPassword(auth,email,password) //else create the authenticaion data for the user)
   } 
   //below methods is to sign in user with email and password
   export const signUserWithEmailAndPassword = async (email,password)=>{ 
@@ -130,3 +136,18 @@ const firebaseConfig = {
   export const onAuthStateChangedListner = (callback)=> {
     
     onAuthStateChanged(auth,callback)}
+
+
+  export const getCurrentUser=()=>{  
+    return  new Promise((resolve,reject)=>{
+        const unsubsribe = onAuthStateChanged( 
+          auth, 
+          (userAuth)=>{
+          unsubsribe()
+          resolve(userAuth)
+        },
+      reject) //onAuthStateChanged takes a 3rd optional parameter which is a callback funciton, 
+              //which runs when there is error when fetching user info
+    })
+
+  }
