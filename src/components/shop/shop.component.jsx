@@ -6,12 +6,12 @@ import Category from "../../routes/category/category.component";
 import { useEffect } from "react";
 //import {getCategoriesAndDocuments} from '../../utils/firebase.utils.js'
 import { useDispatch } from "react-redux";
-import { fetchCategoriesAsync } from "../../store/categories/catergory.action";
+import { fetchCategoriesStart } from "../../store/categories/catergory.action";
 const Shop = ()=>{
     const dispatch = useDispatch()
     useEffect(()=>{
 
-        dispatch(fetchCategoriesAsync()) //thunk function 
+        dispatch(fetchCategoriesStart()) //thunk function 
        // const getCategoryMap = async ()=>{
             // const  categoriesArray = await getCategoriesAndDocuments()
             // console.log(categoriesArray)
