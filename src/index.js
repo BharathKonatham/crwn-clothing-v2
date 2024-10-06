@@ -24,9 +24,9 @@ root.render(
         {/* <UserProvider> user data */}
           {/* <CategoriesProvider>  products data */}
             {/* <CartProvider> cart open or closed status provider */}
-            <PersistGate persistor={persistor} > {/* persistor to retains state after refresh */}
+            {/*<PersistGate persistor={persistor} >  persistor to retains state after refresh */}
               <App />
-            </PersistGate>
+            {/*</PersistGate>*/}
               
             {/* </CartProvider> */}
           {/* </CategoriesProvider>  */}
