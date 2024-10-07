@@ -9,9 +9,7 @@ import { store } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor } from './store/store';
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from "@stripe/stripe-js";
-//import { stripePromise } from './stripe/stripe.utils';
-const stripePromise = loadStripe('pk_test_51Q72NTP7FdtR1OK6wqREZtM8bIPorr7IswxPgupDGyqJ1Lj0bcUYQyfYH4LrcO3hQT5XJjhs9I89xZFg6vAAqnn600rX23EWzx')
+import { stripePromise } from './stripe/stripe.utils';
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
