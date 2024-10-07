@@ -1,39 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-//import { UserProvider } from './contexts/user.context';
-//import { CategoriesProvider } from './contexts/categories.context';
-//import { CartProvider } from './contexts/cart.context';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor } from './store/store';
-
-
-
+import { Elements } from '@stripe/react-stripe-js';
+import { stripePromise } from './stripe/stripe.utils';
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    
       <Provider store={store}> {/*  redux store provider */}
-        {/* <UserProvider> user data */}
-          {/* <CategoriesProvider>  products data */}
-            {/* <CartProvider> cart open or closed status provider */}
-            <PersistGate persistor={persistor} > {/* persistor to retains state after refresh */}
-              <App />
-            </PersistGate>
-              
-            {/* </CartProvider> */}
-          {/* </CategoriesProvider>  */}
-        {/* </UserProvider> */}
+        <PersistGate persistor={persistor} > {/* persistor to retains state after refresh */}
+          <Elements stripe={stripePromise}>
+            <App />
+          </Elements>
+        </PersistGate>
       </Provider>
-      
-    
     </BrowserRouter>
   </React.StrictMode>,
 );
