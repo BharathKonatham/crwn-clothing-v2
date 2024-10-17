@@ -9,7 +9,7 @@ export type FetchCategoriesSuccess = actionWithPayload <CATEGORIES_ACTION_TYPES.
 export type FetchCategoriesFailed = actionWithPayload<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED, Error>
 
 //creating union
-export type CategoryAction  = FetchCategoriesStart|FetchCategoriesStart|FetchCategoriesFailed
+export type CategoryAction  = FetchCategoriesStart|FetchCategoriesSuccess|FetchCategoriesFailed
 
 //below three are the actions for category which are typed
 export const fetchCategoriesStart = ():FetchCategoriesStart => createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START)

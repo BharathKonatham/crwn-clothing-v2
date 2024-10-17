@@ -1,4 +1,7 @@
 
+type
+
+
 export type actionWithPayload<T,P> ={
     type:T;
     payload:P;

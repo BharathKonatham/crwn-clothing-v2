@@ -26,20 +26,21 @@
 // the above code 
 
 import { createSelector } from 'reselect';
-
+import { CategoriesState } from './category.reducer';
+import { CategoryMap } from './category.types';
 // Assuming the `categories` data comes from state
-const selectCategoryReducer = (state) => state.categories;
+const selectCategoryReducer = (state): CategoriesState => state.categories;
 
 export const selectCategories = createSelector([selectCategoryReducer],(categoriesSlice)=>categoriesSlice.categories) 
 
 export const selectCategoriesMap = createSelector(
   [selectCategories],
-  (categories) => {
+  (categories):CategoryMap => {
     console.log(categories)
     return categories.reduce((acc, category) => {
       acc[category.title.toLowerCase()] = category.items;
       return acc;
-    }, {});
+    }, {} as CategoryMap);
   }
 );
 
