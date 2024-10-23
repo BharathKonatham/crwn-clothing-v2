@@ -1,7 +1,7 @@
-import { CATEGORIES_ACTION_TYPES } from "./category.types"
-import { CategoryAction, } from "./catergory.action"
-import { Category } from "./category.types";
 
+import { fetchCategoriesStart,fetchCategoriesSuccess, fetchCategoriesFailed} from "./catergory.action"
+import { Category } from "./category.types";
+import { AnyAction } from "redux-saga";
 export type CategoriesState = {
     readonly categories: Category[];
     readonly isLoading: boolean;
@@ -16,23 +16,35 @@ const categoriesSlice :CategoriesState = {
     error:null
 }
 
-export const categoriesReducer  = (state = categoriesSlice, action = {} as CategoryAction) :CategoriesState =>{
+export const categoriesReducer  = (state = categoriesSlice, action = {} as AnyAction) :CategoriesState =>{
 
-    
-    switch (action.type){
+    if(fetchCategoriesStart.match(action)){
+        return {...state, isLoading:true}
 
-        case CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START: {
-            return { ...state,isLoading:true }
-        }
-        case CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS: {
-            
-            return { ...state, categories: action.payload, isLoading:false }
-        }
-       
-        case CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED:{
-            return { ...state,error:action.payload, isLoading:false }
-        }
-        default: 
-            return state;
     }
+
+    if(fetchCategoriesSuccess.match(action)){
+        return { ...state, categories: action.payload, isLoading:false }
+    }
+    if(fetchCategoriesFailed.match(action)){
+        return  {...state,error:action.payload, isLoading:false }
+    }
+    // switch (action.type){
+
+    //     case CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START: {
+    //         return { ...state,isLoading:true }
+    //     }
+    //     case CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS: {
+            
+    //         return { ...state, categories: action.payload, isLoading:false }
+    //     }
+       
+    //     case CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED:{
+    //         return { ...state,error:action.payload, isLoading:false }
+    //     }
+    //     default: 
+    //         return state;
+    // }
+
+    return state
 }
